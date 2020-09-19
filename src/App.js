@@ -1,26 +1,38 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import View from "@vkontakte/vkui/dist/components/View/View";
+import "@vkontakte/vkui/dist/vkui.css";
+import MapPage from "./MapPage";
+import PublicationsPage from "./PublicationsPanel";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      panel: "publications_panel",
+    }
+  }
+
+  render() {
+    return (
+        <View activePanel={this.state.panel}>
+
+          <MapPage
+              id={"map_panel"}
+              next={() => {
+                this.setState({panel: "publications_panel"})
+              }}/>
+
+              <PublicationsPage
+                  id={"publications_panel"}
+                  openMap={() => this.setState({panel: "map_panel"})}
+              />
+
+        </View>
+    );
+  }
 }
 
 export default App;
